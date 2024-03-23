@@ -1,0 +1,39 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+
+# Create a date range for the last 7 days
+dates = pd.date_range(end=pd.Timestamp.today(), periods=7, freq='D')
+
+# Create a DataFrame with the prices for each retailer
+data = pd.DataFrame({
+    'Date': dates,
+    'Retailer A': np.repeat(70, 7),
+    'Retailer B': np.repeat(80, 7),
+    'Retailer C': np.repeat(90, 7)
+})
+
+# Set the 'Date' column as the index
+data.set_index('Date', inplace=True)
+
+# Create the plot
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.plot(data['Retailer A'], marker='o', label='Retailer A')
+ax.plot(data['Retailer B'], marker='s', label='Retailer B')
+ax.plot(data['Retailer C'], marker='^', label='Retailer C')
+
+# Set the title and labels
+ax.set_title('Product Price Time Series')
+ax.set_xlabel('Date')
+ax.set_ylabel('Price ($)')
+
+# Set the x-tick labels to display dates
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+plt.xticks(rotation=45)
+
+# Add a legend
+ax.legend()
+
+# Display the plot
+plt.tight_layout()
+plt.show()
